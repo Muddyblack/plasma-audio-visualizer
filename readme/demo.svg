@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 156" width="680" height="156">
+<defs>
+<style>
+.dot{transform-box:fill-box;transform-origin:50% 50%}
+@keyframes sweep{0%{transform:translateX(0);opacity:0}20%,65%{opacity:.58}100%{transform:translateX(187px);opacity:0}}
+@keyframes pulse{0%,100%{transform:scale(.88)}50%{transform:scale(1.22)}}
+</style>
+<radialGradient id="art" cx="40%" cy="35%" r="75%">
+  <stop offset="0%" stop-color="#a855f7"/>
+  <stop offset="45%" stop-color="#3b6fd4"/>
+  <stop offset="100%" stop-color="#0a1628"/>
+</radialGradient>
+<linearGradient id="artshine" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0%" stop-color="#fff" stop-opacity=".18"/>
+  <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="artclip"><rect x="16" y="16" width="92" height="92" rx="11"/></clipPath>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%" stop-color="#151728"/>
+  <stop offset="100%" stop-color="#0c0d1b"/>
+</linearGradient>
+<linearGradient id="pg" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%" stop-color="#6ea8fe" stop-opacity=".62"/>
+  <stop offset="65%" stop-color="#6ea8fe" stop-opacity=".95"/>
+  <stop offset="100%" stop-color="#fff" stop-opacity=".82"/>
+</linearGradient>
+<filter id="glow" x="-10%" y="-40%" width="120%" height="180%">
+  <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
+  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="shadow">
+  <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#6ea8fe" flood-opacity=".16"/>
+</filter>
+</defs>
+
+<!-- Background -->
+<rect width="680" height="156" rx="14" fill="url(#bg)" filter="url(#shadow)"/>
+<rect width="680" height="156" rx="14" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+<rect x="14" y="0.5" width="652" height="1" rx="0.5" fill="rgba(255,255,255,0.14)"/>
+
+<!-- Album art -->
+<g clip-path="url(#artclip)">
+  <rect x="16" y="16" width="92" height="92" fill="url(#art)"/>
+  <!-- Vinyl grooves -->
+  <circle cx="62" cy="62" r="38" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+  <circle cx="62" cy="62" r="30" fill="none" stroke="rgba(0,0,0,0.20)" stroke-width="1"/>
+  <circle cx="62" cy="62" r="22" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1"/>
+  <circle cx="62" cy="62" r="14" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+  <!-- Center label -->
+  <circle cx="62" cy="62" r="9" fill="rgba(0,0,0,0.45)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+  <circle cx="62" cy="62" r="2.5" fill="rgba(255,255,255,0.30)"/>
+  <!-- Gloss highlight -->
+  <rect x="16" y="16" width="92" height="92" fill="url(#artshine)"/>
+</g>
+<rect x="16" y="16" width="92" height="92" rx="11" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+
+<!-- Transport pill -->
+<rect x="16" y="116" width="92" height="26" rx="13" fill="rgba(255,255,255,0.09)" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+<rect x="22" y="116.5" width="80" height="1" rx="0.5" fill="rgba(255,255,255,0.28)"/>
+<!-- Prev -->
+<polygon points="44,123 33,129 44,135" fill="rgba(255,255,255,0.80)"/>
+<!-- Pause -->
+<rect x="57" y="123" width="4" height="12" rx="1.5" fill="rgba(255,255,255,0.90)"/>
+<rect x="63" y="123" width="4" height="12" rx="1.5" fill="rgba(255,255,255,0.90)"/>
+<!-- Next -->
+<polygon points="80,123 91,129 80,135" fill="rgba(255,255,255,0.80)"/>
+
+<!--
+  Waveform: two animated bezier curves mirrored from center (y=54).
+  Matches the QML Canvas: plot(-1) = top curve, plot(1) = bottom curve.
+  Four wave shapes cycle via SMIL path morphing (Q=quiet, A/B/C=active).
+-->
+<g filter="url(#glow)">
+  <!-- Top curve -->
+  <path fill="none" stroke="#6ea8fe" stroke-width="1.8" stroke-linecap="round">
+    <animate attributeName="d" calcMode="spline"
+      keyTimes="0;0.12;0.35;0.50;0.65;0.88;1"
+      keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+      values="
+        M 124,54 C 147,54 167,52 190,52 C 213,52 234,54 257,54 C 280,54 301,52 324,52 C 347,52 367,54 390,54 C 413,54 434,52 457,52 C 480,52 501,54 524,54 C 547,54 567,52 590,52 C 617,52 639,54 666,54;
+        M 124,54 C 147,54 167,46 190,46 C 213,46 234,34 257,34 C 280,34 301,36 324,36 C 347,36 367,28 390,28 C 413,28 434,42 457,42 C 480,42 501,32 524,32 C 547,32 567,44 590,44 C 617,44 639,54 666,54;
+        M 124,54 C 147,54 167,39 190,39 C 213,39 234,26 257,26 C 280,26 301,46 324,46 C 347,46 367,32 390,32 C 413,32 434,24 457,24 C 480,24 501,38 524,38 C 547,38 567,48 590,48 C 617,48 639,54 666,54;
+        M 124,54 C 147,54 167,30 190,30 C 213,30 234,44 257,44 C 280,44 301,26 324,26 C 347,26 367,40 390,40 C 413,40 434,28 457,28 C 480,28 501,46 524,46 C 547,46 567,34 590,34 C 617,34 639,54 666,54;
+        M 124,54 C 147,54 167,39 190,39 C 213,39 234,26 257,26 C 280,26 301,46 324,46 C 347,46 367,32 390,32 C 413,32 434,24 457,24 C 480,24 501,38 524,38 C 547,38 567,48 590,48 C 617,48 639,54 666,54;
+        M 124,54 C 147,54 167,46 190,46 C 213,46 234,34 257,34 C 280,34 301,36 324,36 C 347,36 367,28 390,28 C 413,28 434,42 457,42 C 480,42 501,32 524,32 C 547,32 567,44 590,44 C 617,44 639,54 666,54;
+        M 124,54 C 147,54 167,52 190,52 C 213,52 234,54 257,54 C 280,54 301,52 324,52 C 347,52 367,54 390,54 C 413,54 434,52 457,52 C 480,52 501,54 524,54 C 547,54 567,52 590,52 C 617,52 639,54 666,54"
+      dur="6s" repeatCount="indefinite"/>
+  </path>
+  <!-- Bottom curve (mirrored, phase-offset) -->
+  <path fill="none" stroke="#6ea8fe" stroke-width="1.8" stroke-linecap="round">
+    <animate attributeName="d" calcMode="spline"
+      keyTimes="0;0.12;0.35;0.50;0.65;0.88;1"
+      keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+      values="
+        M 124,54 C 147,54 167,56 190,56 C 213,56 234,54 257,54 C 280,54 301,56 324,56 C 347,56 367,54 390,54 C 413,54 434,56 457,56 C 480,56 501,54 524,54 C 547,54 567,56 590,56 C 617,56 639,54 666,54;
+        M 124,54 C 147,54 167,78 190,78 C 213,78 234,64 257,64 C 280,64 301,82 324,82 C 347,82 367,68 390,68 C 413,68 434,80 457,80 C 480,80 501,62 524,62 C 547,62 567,74 590,74 C 617,74 639,54 666,54;
+        M 124,54 C 147,54 167,62 190,62 C 213,62 234,74 257,74 C 280,74 301,72 324,72 C 347,72 367,80 390,80 C 413,80 434,66 457,66 C 480,66 501,76 524,76 C 547,76 567,64 590,64 C 617,64 639,54 666,54;
+        M 124,54 C 147,54 167,69 190,69 C 213,69 234,82 257,82 C 280,82 301,62 324,62 C 347,62 367,76 390,76 C 413,76 434,84 457,84 C 480,84 501,70 524,70 C 547,70 567,60 590,60 C 617,60 639,54 666,54;
+        M 124,54 C 147,54 167,62 190,62 C 213,62 234,74 257,74 C 280,74 301,72 324,72 C 347,72 367,80 390,80 C 413,80 434,66 457,66 C 480,66 501,76 524,76 C 547,76 567,64 590,64 C 617,64 639,54 666,54;
+        M 124,54 C 147,54 167,78 190,78 C 213,78 234,64 257,64 C 280,64 301,82 324,82 C 347,82 367,68 390,68 C 413,68 434,80 457,80 C 480,80 501,62 524,62 C 547,62 567,74 590,74 C 617,74 639,54 666,54;
+        M 124,54 C 147,54 167,56 190,56 C 213,56 234,54 257,54 C 280,54 301,56 324,56 C 347,56 367,54 390,54 C 413,54 434,56 457,56 C 480,56 501,54 524,54 C 547,54 567,56 590,56 C 617,56 639,54 666,54"
+      dur="6s" repeatCount="indefinite" begin="-2s"/>
+  </path>
+</g>
+
+<!-- Progress track -->
+<rect x="124" y="90" width="542" height="3" rx="1.5" fill="rgba(255,255,255,0.09)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+<!-- Progress fill ~40% -->
+<rect x="124" y="90" width="217" height="3" rx="1.5" fill="url(#pg)"/>
+<!-- Sweep shimmer -->
+<rect x="124" y="90" width="30" height="3" rx="1.5" fill="rgba(255,255,255,0.68)" style="animation:sweep 2.2s ease-in-out infinite"/>
+<!-- Progress dot -->
+<circle class="dot" cx="341" cy="91.5" r="4" fill="white" opacity=".90" style="animation:pulse 1.4s ease-in-out infinite"/>
+
+<!-- Times -->
+<text x="124" y="106" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="rgba(255,255,255,0.46)">1:23</text>
+<text x="666" y="106" text-anchor="end" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="rgba(255,255,255,0.46)">3:45</text>
+
+<!-- Track info -->
+<text x="124" y="122" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.92)">Plasma Audio Visualizer</text>
+<text x="124" y="138" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="rgba(255,255,255,0.50)">KDE Plasma</text>
+
+</svg>

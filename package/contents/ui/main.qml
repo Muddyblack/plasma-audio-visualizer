@@ -8,9 +8,9 @@ import org.kde.kirigami as Kirigami
 PlasmoidItem {
     id: root
 
-    Layout.minimumWidth: 340
+    Layout.minimumWidth: 260
     Layout.minimumHeight: 64
-    Layout.preferredWidth: 300
+    Layout.preferredWidth: 360
     Layout.preferredHeight: 84
 
     preferredRepresentation: fullRepresentation
