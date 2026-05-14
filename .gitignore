@@ -1,0 +1,15 @@
+# Build artifacts
+*.plasmoid
+
+# Nix
+result
+.direnv/
+
+# Editor junk
+*~
+*.swp
+.idea/
+.vscode/
+
+# System junk
+.DS_Store

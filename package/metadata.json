@@ -1,0 +1,17 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            { "Name": "muddyblack", "Email": "" }
+        ],
+        "Category": "Multimedia",
+        "Description": "Glassy audio visualizer with MPRIS track info and seekable progress, powered by cava.",
+        "Icon": "audio-volume-high",
+        "Id": "org.muddyblack.audioWaveVisualizer",
+        "License": "MIT",
+        "Name": "Audio Wave Visualizer",
+        "Version": "1.0.0",
+        "Website": "https://github.com/muddyblack/plasma-audio-visualizer"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
