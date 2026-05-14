@@ -1,4 +1,9 @@
+<p align="center">
+  <img src="readme/logo.png" width="200" alt="Plasma Audio Wave Visualizer Logo">
+</p>
+
 # Plasma Audio Wave Visualizer
+
 
 A glassy audio visualizer plasmoid for KDE Plasma 6. Renders mirrored waveform that reacts to whatever is playing system-wide (via [cava]), alongside MPRIS track metadata, album art, transport controls, and a seekable progress bar.
 
