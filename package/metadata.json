@@ -7,9 +7,9 @@
         "Category": "Multimedia",
         "Description": "Glassy audio visualizer with MPRIS track info and seekable progress, powered by cava.",
         "Icon": "icon.png",
-        "Id": "org.muddyblack.audioWaveVisualizer",
+        "Id": "org.muddyblack.plasmaAudioVisualizer",
         "License": "MIT",
-        "Name": "Audio Wave Visualizer",
+        "Name": "Plasma Audio Visualizer",
         "Version": "1.0.0",
         "Website": "https://github.com/muddyblack/plasma-audio-visualizer"
     },
