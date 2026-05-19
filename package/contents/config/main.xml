@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+    <group name="General">
+        <entry name="visualizerType" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="progressBarStyle" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="numBars" type="Int">
+            <default>24</default>
+        </entry>
+        <entry name="sensitivity" type="Int">
+            <default>100</default>
+        </entry>
+        <entry name="framerate" type="Int">
+            <default>60</default>
+        </entry>
+        <entry name="noiseReduction" type="Double">
+            <default>0.77</default>
+        </entry>
+        <entry name="showMpris" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="useSystemAccent" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="customColor" type="String">
+            <default>#a855f7</default>
+        </entry>
+        <entry name="lineWidth" type="Double">
+            <default>1.8</default>
+        </entry>
+        <entry name="fillWave" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showBg" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="bgColor" type="String">
+            <default>#0a0b10</default>
+        </entry>
+        <entry name="bgRadius" type="Double">
+            <default>12.0</default>
+        </entry>
+        <entry name="glowWave" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="useSystemText" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="customTextColor" type="String">
+            <default>#ffffff</default>
+        </entry>
+        <entry name="useSystemControls" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="customControlColor" type="String">
+            <default>#ffffff</default>
+        </entry>
+        <entry name="useSystemDockBg" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="customDockBgColor" type="String">
+            <default>#ffffff</default>
+        </entry>
+    </group>
+</kcfg>

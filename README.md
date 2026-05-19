@@ -16,11 +16,17 @@ A glassy audio visualizer plasmoid for KDE Plasma 6. Renders mirrored waveform t
 
 ## Features
 
+- **5 visualizer styles** — Smooth Wave, Rounded Bars, Mirror Bars, Tech Line, Floating Dots
+- **4 progress bar styles** — Glassy Sleek, Ultra Minimal, Glowing Pulse, Bold Pill
 - System-wide reactive waveform (PipeWire via cava — not tied to any single player)
 - MPRIS2 track info: title, artist, album art
-- Transport controls (prev / play-pause / next)
+- Transport controls (prev / play-pause / next) with customizable color
 - Seekable progress bar with elapsed/total time
-- Honors the active Plasma accent color
+- Honors the active Plasma accent color (or set a custom color)
+- Optional waveform fill + neon glow effect
+- Optional background card with configurable color, opacity (via alpha), and corner radius
+- Custom text and controls colors
+- Customizable dock background color (supports alpha via color picker)
 - No panel background — sits cleanly on any panel
 
 ## Requirements
@@ -82,7 +88,22 @@ For a detailed explanation of the architecture and data flow, see the [Architect
 
 In short: the widget uses a small shell helper (`feeder.sh`) to run `cava` in the background and atomically writes the latest bars to `$XDG_RUNTIME_DIR/audio-wave-widget/bars`. The QML side polls that file at ~30 fps.
 
-## Tweaking
+## Configuration
 
-- Bar count, framerate, sensitivity: edit `package/contents/code/cava.conf` and reinstall.
-- Visual style: `package/contents/ui/main.qml`.
+All settings are available via the widget's right-click → Configure menu:
+
+| Setting | Description |
+|---|---|
+| **Visualizer Style** | Smooth Wave / Rounded Bars / Mirror Bars / Tech Line / Floating Dots |
+| **Progress Bar Style** | Glassy Sleek / Ultra Minimal / Glowing Pulse / Bold Pill |
+| **Number of Bars** | How many frequency bars cava outputs (8–128) |
+| **Framerate** | Target refresh rate in Hz |
+| **Sensitivity** | Cava amplitude multiplier |
+| **Smoothing** | Noise reduction factor (0–1) |
+| **Wave Color** | System accent or custom color |
+| **Wave Glow** | Neon glow shadow on the waveform |
+| **Fill Wave** | Transparent gradient fill under the waveform |
+| **Line Width** | Stroke width for line-based visualizers |
+| **Text / Controls / Dock Colors** | Each independently customizable |
+| **Background Card** | Optional frosted card with custom color+alpha and corner radius |
+| **Show MPRIS info** | Toggle album art, track title, artist, and controls |

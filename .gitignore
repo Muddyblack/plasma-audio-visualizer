@@ -1,5 +1,6 @@
 # Build artifacts
 *.plasmoid
+notes.md
 
 # Nix
 result

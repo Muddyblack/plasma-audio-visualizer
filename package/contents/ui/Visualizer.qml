@@ -1,10 +1,10 @@
-import QtQuick 2.15
+import QtQuick
 import org.kde.plasma.plasma5support as Plasma5Support
 
 Item {
     id: vis
 
-    property int numBars: 24
+    property int numBars: plasmoid.configuration.numBars
     property real maxRange: 600.0
     property var bars: Array(numBars).fill(0)
     property bool active: true
@@ -17,8 +17,16 @@ Item {
         engine: "executable"
         connectedSources: []
         onNewData: function(source, data) { disconnectSource(source) }
-        function spawn() { connectSource("bash " + vis.feederPath) }
-        function killFeeder() { connectSource("pkill -f " + vis.feederPath) }
+        function spawn() {
+            const args = [
+                plasmoid.configuration.numBars,
+                plasmoid.configuration.framerate,
+                plasmoid.configuration.sensitivity,
+                plasmoid.configuration.noiseReduction
+            ].join(" ")
+            connectSource("bash " + vis.feederPath + " " + args)
+        }
+        function killFeeder() { connectSource("pkill -f " + vis.feederPath + " ; pkill -f 'cava -p .*audio-wave-widget'") }
     }
 
     Plasma5Support.DataSource {
@@ -54,6 +62,27 @@ Item {
         repeat: true
         triggeredOnStart: true
         onTriggered: feederLauncher.spawn()
+    }
+
+    function restart() {
+        feederLauncher.killFeeder()
+        restartTimer.start()
+    }
+
+    Timer {
+        id: restartTimer
+        interval: 150
+        repeat: false
+        onTriggered: feederLauncher.spawn()
+    }
+
+    Connections {
+        target: plasmoid.configuration
+        ignoreUnknownSignals: true
+        function onNumBarsChanged() { vis.restart() }
+        function onSensitivityChanged() { vis.restart() }
+        function onFramerateChanged() { vis.restart() }
+        function onNoiseReductionChanged() { vis.restart() }
     }
 
     Component.onDestruction: feederLauncher.killFeeder()
