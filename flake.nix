@@ -40,5 +40,25 @@
             };
           };
         });
+
+      devShells = forAllSystems (system:
+        let pkgs = import nixpkgs { inherit system; };
+        in {
+          default = pkgs.mkShell {
+            name = "plasma-audio-visualizer-dev";
+            packages = with pkgs; [
+              qt6.qtdeclarative
+              kdePackages.kpackage
+              pre-commit
+              zip
+            ];
+            shellHook = ''
+              pre-commit install -f --install-hooks
+              echo "plasma-audio-visualizer dev shell ready"
+              echo "  test_install.sh  — install to local Plasma session"
+              echo "  pack.sh          — produce .plasmoid archive"
+            '';
+          };
+        });
     };
 }
