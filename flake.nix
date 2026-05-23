@@ -49,6 +49,7 @@
             packages = with pkgs; [
               qt6.qtdeclarative
               kdePackages.kpackage
+              kdePackages.plasma-sdk
               pre-commit
               zip
             ];
