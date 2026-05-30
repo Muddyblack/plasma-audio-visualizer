@@ -31,15 +31,39 @@ PlasmoidItem {
     readonly property string desktopEntry: mpris2Model.currentPlayer?.desktopEntry ?? ""
 
     property string artUrl: ""
-    readonly property string _rawArtUrl: mpris2Model.currentPlayer?.artUrl ?? ""
-    on_RawArtUrlChanged: if (_rawArtUrl !== "" && plasmoid.configuration.showMpris)
-        artUrl = _rawArtUrl
+
+    function _refreshArtUrl() {
+        const p = mpris2Model.currentPlayer;
+        if (!p || !plasmoid.configuration.showMpris) {
+            artUrl = "";
+            return;
+        }
+        const url = p.artUrl ?? "";
+        if (url !== "")
+            artUrl = url;
+    }
+
+    Connections {
+        target: mpris2Model
+        ignoreUnknownSignals: true
+        function onCurrentPlayerChanged() {
+            root._refreshArtUrl();
+        }
+    }
+
+    Connections {
+        target: mpris2Model.currentPlayer
+        ignoreUnknownSignals: true
+        function onArtUrlChanged() {
+            root._refreshArtUrl();
+        }
+    }
+
     Connections {
         target: plasmoid.configuration
         ignoreUnknownSignals: true
         function onShowMprisChanged() {
-            if (!plasmoid.configuration.showMpris)
-                root.artUrl = "";
+            root._refreshArtUrl();
         }
     }
 
@@ -118,102 +142,24 @@ PlasmoidItem {
             source: backgroundCard
             visible: plasmoid.configuration.showBg
 
-            maskEnabled: plasmoid.configuration.cutBg
-            maskSource: maskWrapper
-            maskInverted: true
+            // Round the whole composited card (art + tint + border) in one pass.
+            // A Rectangle's radius + clip only clips children to the SQUARE
+            // bounding box, so the fill/blur leaked out past the rounded border —
+            // that was the "weird corners". Masking the final output with a
+            // rounded rect fixes every background mode (solid or art) at once.
+            maskEnabled: true
+            maskSource: cardRoundMask
         }
 
-        Item {
-            id: maskWrapper
+        // Rounded-rectangle alpha mask for backgroundCardEffect. Rendered to a
+        // texture (layer.enabled) so the MultiEffect can sample it; never shown.
+        Rectangle {
+            id: cardRoundMask
             anchors.fill: parent
+            radius: plasmoid.configuration.bgRadius
+            color: "black"
             visible: false
-
-            Canvas {
-                id: waveMask
-                x: wave.x + (wave.parent ? wave.parent.x : 0) + (wave.parent && wave.parent.parent ? wave.parent.parent.x : 0)
-                y: wave.y + (wave.parent ? wave.parent.y : 0) + (wave.parent && wave.parent.parent ? wave.parent.parent.y : 0)
-                width: wave.width
-                height: wave.height
-                antialiasing: true
-                renderStrategy: Canvas.Cooperative
-
-                // Only repaint the mask while the cut-out effect is actually
-                // live (showBg + cutBg). Otherwise this Canvas + its MultiEffect
-                // re-render every frame feeding a mask nothing consumes.
-                readonly property bool maskActive: plasmoid.configuration.showBg && plasmoid.configuration.cutBg
-                Connections {
-                    target: vis
-                    function onBarsChanged() {
-                        if (waveMask.maskActive)
-                            waveMask.requestPaint();
-                    }
-                }
-                Connections {
-                    target: root
-                    function onIsPlayingChanged() {
-                        if (waveMask.maskActive)
-                            waveMask.requestPaint();
-                    }
-                }
-                // Repaint once when the effect is toggled on so the mask is fresh.
-                Connections {
-                    target: plasmoid.configuration
-                    ignoreUnknownSignals: true
-                    function onCutBgChanged() {
-                        waveMask.requestPaint();
-                    }
-                    function onShowBgChanged() {
-                        waveMask.requestPaint();
-                    }
-                }
-
-                onPaint: {
-                    const ctx = getContext("2d");
-                    ctx.reset();
-                    if (!root.isPlaying)
-                        return;
-                    const mid = height / 2;
-                    const n = vis.numBars;
-                    const step = width / (n - 1);
-                    const amp = height * 0.42;
-
-                    function getTaper(i, total) {
-                        const pos = i / (total - 1);
-                        const edge = 0.15;
-                        if (pos < edge) {
-                            const w = pos / edge;
-                            return 0.5 - 0.5 * Math.cos(w * Math.PI);
-                        } else if (pos > 1.0 - edge) {
-                            const w = (1.0 - pos) / edge;
-                            return 0.5 - 0.5 * Math.cos(w * Math.PI);
-                        }
-                        return 1.0;
-                    }
-
-                    function plot(sign) {
-                        ctx.beginPath();
-                        let prevX = 0;
-                        let prevY = mid + sign * ((vis.bars[0] || 0) / vis.maxRange) * amp * getTaper(0, n);
-                        ctx.moveTo(prevX, prevY);
-                        for (let i = 1; i < n; i++) {
-                            const v = ((vis.bars[i] || 0) / vis.maxRange) * getTaper(i, n);
-                            const x = i * step;
-                            const y = mid + sign * v * amp;
-                            const cpX = (prevX + x) / 2;
-                            ctx.bezierCurveTo(cpX, prevY, cpX, y, x, y);
-                            prevX = x;
-                            prevY = y;
-                        }
-                        ctx.lineTo(width, mid);
-                        ctx.lineTo(0, mid);
-                        ctx.closePath();
-                        ctx.fillStyle = "black";
-                        ctx.fill();
-                    }
-                    plot(-1);
-                    plot(1);
-                }
-            }
+            layer.enabled: true
         }
 
         RowLayout {
@@ -234,6 +180,7 @@ PlasmoidItem {
 
                 Item {
                     id: artBox
+                    visible: plasmoid.configuration.showArtThumb
                     Layout.fillHeight: true
                     Layout.maximumHeight: 72
                     Layout.preferredWidth: Math.min(artBox.height, 72)

@@ -32,6 +32,7 @@ KCM.SimpleKCM {
     property alias cfg_bgColor: bgColorButton.color
     property alias cfg_bgRadius: bgRadiusSlider.value
     property alias cfg_artBg: artBgCheckBox.checked
+    property alias cfg_showArtThumb: showArtThumbCheckBox.checked
 
     Kirigami.FormLayout {
         // Cava Settings Section
@@ -96,6 +97,13 @@ KCM.SimpleKCM {
             id: showMprisCheckBox
             Kirigami.FormData.label: i18n("Layout:")
             text: i18n("Show album art and track info")
+        }
+
+        QQC.CheckBox {
+            id: showArtThumbCheckBox
+            Kirigami.FormData.label: i18n("Album Art:")
+            text: i18n("Show album art thumbnail")
+            visible: showMprisCheckBox.checked
         }
 
         QQC.ComboBox {
