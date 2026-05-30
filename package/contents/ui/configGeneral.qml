@@ -14,7 +14,7 @@ KCM.SimpleKCM {
     property alias cfg_sensitivity: sensitivitySlider.value
     property alias cfg_framerate: framerateSpin.value
     property alias cfg_noiseReduction: noiseReductionSlider.value
-    
+
     property alias cfg_showMpris: showMprisCheckBox.checked
     property alias cfg_useSystemAccent: useSystemAccentCheckBox.checked
     property alias cfg_customColor: customColorButton.color
@@ -31,6 +31,7 @@ KCM.SimpleKCM {
     property alias cfg_showBg: showBgCheckBox.checked
     property alias cfg_bgColor: bgColorButton.color
     property alias cfg_bgRadius: bgRadiusSlider.value
+    property alias cfg_artBg: artBgCheckBox.checked
 
     Kirigami.FormLayout {
         // Cava Settings Section
@@ -100,25 +101,13 @@ KCM.SimpleKCM {
         QQC.ComboBox {
             id: visualizerTypeCombo
             Kirigami.FormData.label: i18n("Visualizer Style:")
-            model: [
-                i18n("Smooth Wave"),
-                i18n("Rounded Bars"),
-                i18n("Mirror Bars"),
-                i18n("Tech Line"),
-                i18n("Floating Dots"),
-                i18n("Floating Dots Bold")
-            ]
+            model: [i18n("Smooth Wave"), i18n("Rounded Bars"), i18n("Mirror Bars"), i18n("Tech Line"), i18n("Floating Dots"), i18n("Floating Dots Bold")]
         }
 
         QQC.ComboBox {
             id: progressBarStyleCombo
             Kirigami.FormData.label: i18n("Progress Bar Style:")
-            model: [
-                i18n("Glassy Sleek"),
-                i18n("Ultra Minimal"),
-                i18n("Glowing Pulse"),
-                i18n("Bold Pill")
-            ]
+            model: [i18n("Glassy Sleek"), i18n("Ultra Minimal"), i18n("Glowing Pulse"), i18n("Bold Pill"), i18n("Waveform")]
         }
 
         QQC.CheckBox {
@@ -181,8 +170,6 @@ KCM.SimpleKCM {
             visible: !useSystemDockBgCheckBox.checked
         }
 
-
-
         RowLayout {
             Kirigami.FormData.label: i18n("Line Width:")
             QQC.Slider {
@@ -210,13 +197,18 @@ KCM.SimpleKCM {
             text: i18n("Show background card")
         }
 
-        KQuickControls.ColorButton {
-            id: bgColorButton
-            text: i18n("Background Color")
+        QQC.CheckBox {
+            id: artBgCheckBox
+            Kirigami.FormData.label: i18n("Art Background:")
+            text: i18n("Use album art as blurred background")
             visible: showBgCheckBox.checked
         }
 
-
+        KQuickControls.ColorButton {
+            id: bgColorButton
+            text: i18n("Background Color")
+            visible: showBgCheckBox.checked && !artBgCheckBox.checked
+        }
 
         RowLayout {
             visible: showBgCheckBox.checked
@@ -233,7 +225,5 @@ KCM.SimpleKCM {
                 Layout.minimumWidth: 40
             }
         }
-
-
     }
 }
