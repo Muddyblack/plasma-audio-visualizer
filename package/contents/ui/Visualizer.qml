@@ -98,14 +98,14 @@ Item {
     Timer {
         id: pollTimer
         interval: vis.pollInterval
-        running: vis.active
+        running: vis.active && plasmoid.visible
         repeat: true
         onTriggered: reader.read()
     }
 
     Timer {
         interval: 5000
-        running: true
+        running: plasmoid.visible
         repeat: true
         triggeredOnStart: true
         onTriggered: feederLauncher.spawn()
